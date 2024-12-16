@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
-    id("com.google.dagger.hilt.android")
+    id("com.chaquo.python")
 }
 
 android {
@@ -17,6 +17,20 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+        }
+
+//        python {
+//            pip {
+//                install("nltk")
+//            }
+//            buildPython {
+//                postCopy {
+//                    python.getModule("nltk").callAttr("download", "vader_lexicon")
+//                }
+//            }
+//        }
     }
 
     buildTypes {
@@ -28,31 +42,27 @@ android {
             )
         }
     }
+
     buildFeatures {
-        viewBinding=  true
+        viewBinding = true
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-
-
     implementation(libs.androidx.core.ktx.v190)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -61,32 +71,22 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit.v115)
-    androidTestImplementation(libs.androidx.espresso.core.v351)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     androidTestImplementation(platform(libs.androidx.compose.bom.v20230300))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.androidx.room.runtime.v252)
-    implementation(libs.androidx.room.ktx.v252)
-    ksp(libs.androidx.room.compiler)
+    // Room
+    implementation(libs.androidx.room.runtime.v260)
+    ksp(libs.androidx.room.compiler.v260)
+    implementation(libs.androidx.room.ktx.v260)
+
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     // LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
-
-    // Appcompat
-    implementation(libs.androidx.appcompat.v161)
-
-    // Material Design
-    implementation(libs.material.v190)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
 
     // Retrofit
     implementation(libs.retrofit)
@@ -95,12 +95,20 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
-    // Room
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
-
     // Glide
     implementation(libs.glide)
     ksp(libs.compiler)
+
+    // RecyclerView
+    implementation(libs.androidx.recyclerview)
+
+    implementation(libs.androidx.tools.core)
+    implementation(libs.okhttp)
+    implementation(libs.kotlinx.coroutines.android.v164)
+
+    // Chaquopy
+    implementation(libs.python)
+    implementation(libs.nltk)
+    implementation(libs.slf4j.simple)
+    implementation(libs.javassist)
 }
